@@ -51,7 +51,10 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
-        //
+        $aData = [
+            'note' => $note,
+        ];
+        return Inertia::render('Notes/Show', $aData);
     }
 
     /**
