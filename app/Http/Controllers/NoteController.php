@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Note;
 
 use Illuminate\Http\Request;
+use App\Http\Requests\NotesFormRequest;
 use Inertia\Inertia;
 
 class NoteController extends Controller
@@ -29,7 +30,7 @@ class NoteController extends Controller
      */
     public function create()
     {
-        //
+        return Inertia::render('Notes/Create');
     }
 
     /**
@@ -38,9 +39,9 @@ class NoteController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(NotesFormRequest $request)
     {
-        //
+        return redirect()->route('notes.edit', Note::create($request->validated()));
     }
 
     /**
@@ -51,10 +52,14 @@ class NoteController extends Controller
      */
     public function show(Note $note)
     {
-        $aData = [
-            'note' => $note,
-        ];
-        return Inertia::render('Notes/Show', $aData);
+        /*
+            $aData = [
+                'note' => $note,
+            ];
+            return Inertia::render('Notes/Show', $aData);
+        */
+        // Todo el codigo de arriba puede ser reemplazado por:
+        return Inertia::render('Notes/Show', compact('note'));
     }
 
     /**
@@ -65,7 +70,7 @@ class NoteController extends Controller
      */
     public function edit(Note $note)
     {
-        //
+        return Inertia::render('Notes/Edit', compact('note'));
     }
 
     /**
@@ -75,9 +80,10 @@ class NoteController extends Controller
      * @param  \App\Models\Note  $note
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Note $note)
+    public function update(NotesFormRequest $request, Note $note)
     {
-        //
+        $note->update($request->validated());
+        return redirect()->route('notes.index');
     }
 
     /**
@@ -88,6 +94,7 @@ class NoteController extends Controller
      */
     public function destroy(Note $note)
     {
-        //
+        $note->delete();
+        return redirect()->route('notes.index');
     }
 }

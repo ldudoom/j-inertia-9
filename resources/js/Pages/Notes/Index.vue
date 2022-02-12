@@ -18,6 +18,11 @@
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
                         <div class="shadow bg-white md:rounded-md p-4">
+                            <Link
+                                :href="route('notes.create', {note: note})"
+                                class="bg-indigo-500 hover:bg-indigo-600 py-2 px-4 rounded-md text-white font-bold">
+                                Nueva Nota
+                            </Link>
                             <table>
                                 <thead>
                                     <tr>
@@ -43,11 +48,9 @@
                                             </Link>
                                         </td>
                                         <td class="px-4 py-2">
-                                            <Link
-                                                method="DELETE"
-                                                :href="route('notes.destroy', {note: note})">
+                                            <a href="#" @click.prevent="destroy(note)">
                                                 Eliminar
-                                            </Link>
+                                            </a>
                                         </td>
                                     </tr>
                                 </tbody>
@@ -74,6 +77,13 @@
         },
         props: {
             notes: Array,
+        },
+        methods: {
+            destroy ($note) {
+                if(confirm('¿Está seguro de que desea eliminar la nota: ' + $note.excerpt)){
+                    this.$inertia.delete(this.route('notes.destroy', $note.id));
+                }
+            }
         }
     })
 </script>
