@@ -41,7 +41,7 @@ class NoteController extends Controller
      */
     public function store(NotesFormRequest $request)
     {
-        return redirect()->route('notes.edit', Note::create($request->validated()));
+        return redirect()->route('notes.edit', Note::create($request->validated()))->with('status', 'Nota agregada exitosamente');
     }
 
     /**
@@ -83,7 +83,7 @@ class NoteController extends Controller
     public function update(NotesFormRequest $request, Note $note)
     {
         $note->update($request->validated());
-        return redirect()->route('notes.index');
+        return redirect()->route('notes.index')->with('status', 'Nota actualizada exitosamente');
     }
 
     /**
@@ -95,6 +95,6 @@ class NoteController extends Controller
     public function destroy(Note $note)
     {
         $note->delete();
-        return redirect()->route('notes.index');
+        return redirect()->route('notes.index')->with('status', 'Nota eliminada exitosamente');
     }
 }
