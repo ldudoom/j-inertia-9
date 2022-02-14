@@ -18,11 +18,17 @@
                     </div>
                     <div class="md:col-span-2 mt-5 md:mt-0">
                         <div class="shadow bg-white md:rounded-md p-4">
-                            <Link
-                                :href="route('notes.create', {note: note})"
-                                class="bg-indigo-500 hover:bg-indigo-600 py-2 px-4 rounded-md text-white font-bold">
-                                Nueva Nota
-                            </Link>
+                            <div class="flex justify-between">
+
+                                <input type="text" class="form-input rounded-md shadow-sm" placeholder="Buscar..." v-model="strSearch" />
+
+                                <Link
+                                    :href="route('notes.create', {note: note})"
+                                    class="bg-indigo-500 hover:bg-indigo-600 py-2 px-4 rounded-md text-white font-bold">
+                                    Nueva Nota
+                                </Link>
+                            </div>
+                            <hr class="mb-6 mt-6">
                             <table>
                                 <thead>
                                     <tr>
@@ -68,15 +74,27 @@
     import { defineComponent } from 'vue'
     import { Head, Link } from '@inertiajs/inertia-vue3'
     import AppLayout from '@/Layouts/AppLayout.vue'
+import Input from '../../Jetstream/Input.vue';
 
     export default defineComponent({
         components: {
             AppLayout,
             Head,
-            Link
+            Link,
+            Input
         },
         props: {
             notes: Array,
+        },
+        data () {
+            return {
+                strSearch: ''
+            }
+        },
+        watch: {
+            strSearch: function (value) {
+                this.$inertia.get(this.route('notes.index',{strSearch: value}),{},{preserveState: true})
+            }
         },
         methods: {
             destroy ($note) {
