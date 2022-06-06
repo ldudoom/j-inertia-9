@@ -66,7 +66,7 @@
             submit () {
                 /*
                   Utilizamos Inertia para enviar los datos del formulario, en este caso utilizamos
-                  el verbo PUT, pero podriamos utilizar POST o PATCH, etc.
+                  el verbo POST.
                   Dentro de put() colocamos la ruta a la que vamos a enviar los datos, en este caso
                   el metodo update de notes, enviando su ID.
                   Por ultimo, agregamos la informacion de la nota a actualizar, la cual se encuentra
